@@ -6,11 +6,11 @@ module Magento
     class << self
       # catalog_product_attribute.list
       # Retrieve attribute list
-      # 
+      #
       # Return: array
-      # 
+      #
       # Arguments:
-      # 
+      #
       # int setId - attribute set ID
       def list(*args)
         results = commit("list", *args)
@@ -19,26 +19,37 @@ module Magento
         end
       end
 
+      # catalog_product_attribute.info
+      # Retrieve attribute information
+      #
+      # Return: array
+      #
+      # Arguments:
+      #
+      # string attribute - Attribute code or ID
+      def info(*args)
+        new(commit("info", *args))
+      end
+
       # catalog_product_attribute.currentStore
       # Set/Get current store view
-      # 
+      #
       # Return: int
-      # 
+      #
       # Arguments:
-      # 
+      #
       # mixed storeView - store view id or code (optional)
       def current_store(*args)
         commit("currentStore", *args)
       end
 
-
       # catalog_product_attribute.options
       # Retrieve attribute options
-      # 
+      #
       # Return: array
-      # 
+      #
       # Arguments:
-      # 
+      #
       # mixed attributeId - attribute ID or code
       # mixed storeView - store view ID or code (optional)
       def options(*args)
