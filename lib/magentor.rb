@@ -43,5 +43,5 @@ module Magento
   autoload :ProductTierPrice,    "magentor/product_tier_price"
   autoload :ProductType,         "magentor/product_type"
   autoload :Region,              "magentor/region"
-  autoload :Shipment,            "magentor/shipment"
+  autoload :SalesOrderShipment,  "magentor/sales_order_shipment"
 end

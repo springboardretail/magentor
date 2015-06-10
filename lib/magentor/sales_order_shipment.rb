@@ -6,7 +6,7 @@ module Magento
   # 103  Requested order not exists.
   # 104  Requested tracking not exists.
   # 105  Tracking not deleted. Details in error message.
-  class Shipment < Base
+  class SalesOrderShipment < Base
     class << self      
       # sales_order_shipment.list
       # Retrieve list of shipments by filters
