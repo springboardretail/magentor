@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "magentor"
-  s.version = "0.3.7"
+  s.version = "0.3.8"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Preston Stuteville"]
@@ -37,7 +37,7 @@ Gem::Specification.new do |s|
     "lib/magentor/customer_address.rb",
     "lib/magentor/customer_group.rb",
     "lib/magentor/inventory.rb",
-    "lib/magentor/invoice.rb",
+    "lib/magentor/sales_order_invoice.rb",
     "lib/magentor/order.rb",
     "lib/magentor/order_item.rb",
     "lib/magentor/product.rb",

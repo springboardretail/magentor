@@ -31,7 +31,7 @@ module Magento
   autoload :CustomerGroup,       "magentor/customer_group"
   autoload :Customer,            "magentor/customer"
   autoload :Inventory,           "magentor/inventory"
-  autoload :Invoice,             "magentor/invoice"
+  autoload :SalesOrderInvoice,   "magentor/sales_order_invoice"
   autoload :OrderItem,           "magentor/order_item"
   autoload :Order,               "magentor/order"
   autoload :ProductAttribute,    "magentor/product_attribute"

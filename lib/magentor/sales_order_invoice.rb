@@ -5,7 +5,7 @@ module Magento
   # 102  Invalid data given. Details in error message.
   # 103  Requested order does not exists
   # 104  Invoice status not changed.
-  class Invoice < Base
+  class SalesOrderInvoice < Base
     class << self      
       # sales_order_invoice.list
       # Retrieve list of invoices by filters
