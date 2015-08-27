@@ -92,6 +92,10 @@ module Magento
         commit("currentStore", *args)
       end
 
+      def list_of_additional_attributes(*args)
+        commit("listOfAdditionalAttributes", *args)
+      end
+
       # catalog_product.setSpecialPrice
       # Update product special price
       #
