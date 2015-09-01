@@ -71,11 +71,16 @@ module Magento
 
     def retry_on_connection_error
       attempts = 0
+
       begin
         yield
-      rescue EOFError
+      rescue StandardError
         attempts += 1
-        retry if attempts < 2
+
+        if attempts < 2
+          sleep 5
+          retry
+        end
       end
     end
   end
