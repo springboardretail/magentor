@@ -17,7 +17,7 @@ module Magento
       # mixed product - product ID or Sku
       def list(*args)
         results = commit("list", *args)
-        results.collect do |result|
+        Array(results).map do |result|
           new(result)
         end
       end

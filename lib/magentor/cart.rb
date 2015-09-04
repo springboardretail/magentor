@@ -107,7 +107,7 @@ module Magento
     
     def add_products(products)
       # convert CartProduct classes to hashes
-      products = products.collect do |product|
+      products = Array(products).map do |product|
         product.attributes rescue product
       end
       self if CartProduct.add(self.quote_id, products, self.store_id)

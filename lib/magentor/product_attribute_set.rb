@@ -4,11 +4,11 @@ module Magento
     class << self
       # catalog_product_attribute_set.list
       # Retrieve product attribute sets
-      # 
+      #
       # Return: array
       def list
         results = commit("list", nil)
-        Array(results).collect do |result|
+        Array(results).map do |result|
           new(result)
         end
       end

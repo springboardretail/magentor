@@ -16,7 +16,7 @@ module Magento
       # array filters - filters for order list (optional)
       def list(*args)
         results = commit("list", *args)
-        results.collect do |result|
+        Array(results).map do |result|
           new(result)
         end
       end
@@ -102,7 +102,7 @@ module Magento
         if find_type == :first
           info(results.first.increment_id)
         else
-          results.collect do |o|
+          Array(results).map do |o|
             info(o.increment_id)
           end
         end
@@ -110,7 +110,7 @@ module Magento
     end
 
     def order_items
-      self.items.collect do |item|
+      Array(self.items).map do |item|
         Magento::OrderItem.new(item)
       end
     end

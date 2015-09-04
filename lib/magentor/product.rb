@@ -17,7 +17,7 @@ module Magento
       # mixed storeView - store view ID or code (optional)
       def list(*args)
         results = commit("list", *args)
-        results.collect do |result|
+        Array(results).map do |result|
           new(result)
         end
       end

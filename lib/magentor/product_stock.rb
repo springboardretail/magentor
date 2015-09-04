@@ -14,7 +14,7 @@ module Magento
       # array products - list of products IDs or Skus
       def list(*args)
         results = commit("list", *args)
-        results.collect do |result|
+        Array(results).map do |result|
           new(result)
         end
       end

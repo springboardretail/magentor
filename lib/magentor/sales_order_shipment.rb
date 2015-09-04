@@ -18,7 +18,7 @@ module Magento
       # array filters - filters for shipments list
       def list(*args)
         results = commit("list", *args)
-        results.collect do |result|
+        Array(results).map do |result|
           new(result)
         end
       end
@@ -122,7 +122,7 @@ module Magento
         if find_type == :first
           info(results.first.increment_id)
         else
-          results.collect do |s|
+          Array(results).map do |s|
             info(s.increment_id)
           end
         end

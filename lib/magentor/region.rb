@@ -12,7 +12,7 @@ module Magento
       # string $country - Country code in ISO2 or ISO3
       def list(*args)
         results = commit("list", *args)
-        results.collect do |result|
+        Array(results).map do |result|
           new(result)
         end
       end
