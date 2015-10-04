@@ -20,7 +20,7 @@ module Magento
     end
 
     def connect
-      connect! if session.nil?
+      session.nil? ? connect! : session
     end
 
     def call(method = nil, *args)
