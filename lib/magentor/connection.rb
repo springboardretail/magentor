@@ -80,6 +80,8 @@ module Magento
         if attempts < 2
           sleep 5
           retry
+        else
+          raise
         end
       end
     end
