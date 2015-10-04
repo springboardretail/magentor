@@ -1,5 +1,5 @@
 module Magento
-  class Connection 
+  class Connection
     attr_accessor :session, :config, :logger
 
     def initialize(config = {})
@@ -20,7 +20,7 @@ module Magento
     end
 
     def connect
-      session.nil? ? connect! : session
+      session.nil? ? connect! : self
     end
 
     def call(method = nil, *args)
