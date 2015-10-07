@@ -24,7 +24,7 @@ module Magento
     end
 
     def api_path
-      to_s.split('::').last.underscore.downcase
+      self.class.to_s.split('::').last.underscore.downcase
     end
 
     # TODO: find out if the id naming is consistent
