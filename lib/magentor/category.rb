@@ -20,7 +20,7 @@ module Magento
     # mixed $storeView - store view ID or code (optional)
     def create(attributes)
       id = commit("create", attributes)
-      record = new(attributes)
+      record = self.class.new(connection, attributes)
       record.id = id
       record
     end
@@ -36,7 +36,7 @@ module Magento
     # mixed $storeView - store view id or code (optional)
     # array $attributes - return only specified attributes (optional)
     def info(*args)
-      new(commit("info", *args))
+      self.class.new(connection, commit("info", *args))
     end
 
     # catalog_category.update

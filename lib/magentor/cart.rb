@@ -47,7 +47,7 @@ module Magento
     # int quoteId - Shopping Cart Id (Quote Id)
     # mixed (int | string) storeView - Store view Id or code (optional)
     def info(*args)
-      new(commit("info", *args))
+      self.class.new connection, commit("info", *args)
     end
 
     # cart.totals

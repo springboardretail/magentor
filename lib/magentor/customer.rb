@@ -22,7 +22,7 @@ module Magento
       def list(*args)
         results = commit("list", *args)
         Array(results).map do |result|
-          new(result)
+          self.class.new(connection, result)
         end
       end
 
@@ -36,7 +36,7 @@ module Magento
       # array customerData - cutomer data (email, firstname, lastname, etc...)
       def create(attributes)
         id = commit("create", attributes)
-        record = new(attributes)
+        record = self.class.new(connection, attributes)
         record.id = id
         record
       end
@@ -54,7 +54,7 @@ module Magento
       #   return only these attributes. Possible attributes are updated_at, increment_id, 
       #   customer_id, created_at. The value, customer_id, is always returned.
       def info(*args)
-        new(commit("info", *args))
+        self.class.new(connection, commit("info", *args))
       end
 
       # customer.update

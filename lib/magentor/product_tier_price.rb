@@ -13,7 +13,7 @@ module Magento
     # 
     # mixed product - product ID or Sku
     def info(*args)
-      new(commit("info", *args))
+      self.class.new(connection, commit("info", *args))
     end
 
     # catalog_product_attribute_tier_price.update

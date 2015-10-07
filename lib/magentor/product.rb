@@ -17,7 +17,7 @@ module Magento
     def list(*args)
       results = commit("list", *args)
       Array(results).map do |result|
-        new(result)
+        self.class.new(connection, result)
       end
     end
 
@@ -49,7 +49,7 @@ module Magento
     # mixed storeView - store view ID or code (optional)
     # array attributes - list of attributes that will be loaded (optional)
     def info(*args)
-      new(commit("info", *args))
+      self.class.new(connection, commit("info", *args))
     end
 
     # catalog_product.update

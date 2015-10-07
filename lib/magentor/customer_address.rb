@@ -16,7 +16,7 @@ module Magento
     def list(*args)
       results = commit("list", *args)
       Array(results).map do |result|
-        new(result)
+        self.class.new(connection, result)
       end
     end
 
@@ -31,7 +31,7 @@ module Magento
     # array addressData - adress data (country, zip, city, etc...)
     def create(customer_id, attributes)
       id = commit("create", customer_id, attributes)
-      record = new(attributes)
+      record = self.class.new(connection, attributes)
       record.id = id
       record
     end
@@ -45,7 +45,7 @@ module Magento
     # 
     # int addressId - customer address ID
     def info(*args)
-      new(commit("info", *args))
+      self.class.new(connection, commit("info", *args))
     end
 
     # customer_address.update

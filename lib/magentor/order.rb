@@ -16,7 +16,7 @@ module Magento
     def list(*args)
       results = commit("list", *args)
       Array(results).map do |result|
-        new(result)
+        self.class.new(connection, result)
       end
     end
 
@@ -29,7 +29,7 @@ module Magento
     #
     # string orderIncrementId - order increment id
     def info(*args)
-      new(commit("info", *args))
+      self.class.new(connection, commit("info", *args))
     end
 
     # sales_order.addComment

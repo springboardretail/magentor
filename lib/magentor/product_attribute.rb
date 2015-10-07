@@ -14,7 +14,7 @@ module Magento
     def list(*args)
       results = commit("list", *args)
       Array(results).map do |result|
-        new(result)
+        self.class.new(connection, result)
       end
     end
 
@@ -27,7 +27,7 @@ module Magento
     #
     # string attribute - Attribute code or ID
     def info(*args)
-      new(commit("info", *args))
+      self.class.new(connection, commit("info", *args))
     end
 
     # catalog_product_attribute.currentStore

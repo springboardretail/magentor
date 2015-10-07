@@ -33,7 +33,7 @@ module Magento
     def list(*args)
       results = commit("list", *args)
       Array(results).map do |result|
-        new(result)
+        self.class.new(connection, result)
       end
     end
   end

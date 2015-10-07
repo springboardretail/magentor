@@ -8,7 +8,7 @@ module Magento
     def list
       results = commit("list", nil)
       Array(results).map do |result|
-        new(result)
+        self.class.new(connection, result)
       end
     end
   end
