@@ -8,36 +8,33 @@ module Magento
   # 1074   Payment method is not allowed
   # 1075   Payment method is not set.
   class CartPayment < Base
-    class << self      
+    # cart_payment.method
+    # Set a payment method for shopping cart
+    #
+    # Return: boolean
+    #
+    # Arguments:
+    #
+    # int quoteId - Shopping Cart Id (Quote Id)
+    # CartPaymentMethodEntity paymentData - an associative array with payment method information
+    # mixed (int | string) storeView - Store view Id or code (optional)
+    def method(*args)
+      commit('method', *args)
+    end
 
-      # cart_payment.method
-      # Set a payment method for shopping cart
-#       
-      # Return: boolean
-#       
-      # Arguments:
-#       
-      # int quoteId - Shopping Cart Id (Quote Id)
-      # CartPaymentMethodEntity paymentData - an associative array with payment method information
-      # mixed (int | string) storeView - Store view Id or code (optional)
-      def method(*args)
-        commit('method', *args)
-      end
-
-      # cart_payment.list
-      # Get list of available payment methods for shopping cart
-#       
-      # Return: array of CartPaymentMethodEntity - an array with list of available payment methods
-#       
-      # Arguments:
-#       
-      # int quoteId - Shopping Cart Id (Quote Id)
-      # mixed (int | string) storeView - Store view Id or code (optional)
-      def list(*args)
-        results = commit("list", *args)
-        Array(results).map do |result|
-          new(result)
-        end
+    # cart_payment.list
+    # Get list of available payment methods for shopping cart
+    #
+    # Return: array of CartPaymentMethodEntity - an array with list of available payment methods
+    #
+    # Arguments:
+    #
+    # int quoteId - Shopping Cart Id (Quote Id)
+    # mixed (int | string) storeView - Store view Id or code (optional)
+    def list(*args)
+      results = commit("list", *args)
+      Array(results).map do |result|
+        new(result)
       end
     end
   end

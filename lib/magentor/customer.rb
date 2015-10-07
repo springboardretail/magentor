@@ -5,7 +5,6 @@ module Magento
   # 102  Customer does not exist.
   # 103  Customer not deleted. Details in error message.
   class Customer < Base
-    class << self
       # customer.list
       # Retrieve customers
       # 
@@ -41,8 +40,8 @@ module Magento
         record.id = id
         record
       end
-    
-    
+
+
       # customer.info
       # Retrieve customer data
       # 
@@ -57,7 +56,7 @@ module Magento
       def info(*args)
         new(commit("info", *args))
       end
-    
+
       # customer.update
       # Update customer data
       # 
@@ -70,8 +69,8 @@ module Magento
       def update(*args)
         commit("update", *args)
       end
-    
-    
+
+
       # customer.delete
       # Delete customer
       # 
@@ -83,7 +82,7 @@ module Magento
       def delete(*args)
         commit("delete", *args)
       end
-      
+
       def find_by_id(id)
         info(id)
       end
@@ -102,14 +101,14 @@ module Magento
       def all
         list
       end
-      
+
       def upsert(attributes = {})
         clean_attributes = {}
         # change all keys to symbols
         attributes.each { |key, value| clean_attributes[key.to_sym] = value }
-        
+
         customer = list(:email => clean_attributes[:email]).first
-        
+
         if customer
           # update if there are attributes other than an email address
           update(customer.id, clean_attributes) if clean_attributes.size > 1
@@ -118,26 +117,5 @@ module Magento
           create(clean_attributes)
         end
       end
-      
-    end
-    
-    def addresses
-      Magento::CustomerAddress.list(self.id)
-    end
-    
-    def delete
-      self.class.delete(self.id)
-    end
-    
-    def update_attribute(name, value)
-      @attributes[name] = value
-      self.class.update(self.id, Hash[*[name.to_sym, value]])
-    end
-    
-    def update_attributes(attrs)
-      attrs.each_pair { |k, v| @attributes[k] = v }
-      self.class.update(self.id, attrs)
-    end
-    
   end
 end

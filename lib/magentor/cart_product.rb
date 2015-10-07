@@ -15,93 +15,90 @@ module Magento
   # 1031   Product(s) could not be moved.
   # 1032   One of quote could not be saved during moving product(s) operation.
   class CartProduct < Base
-    class << self      
-      
-      # cart_product.add
-      # Add product or several products into shopping cart
-#       
-      # Return: boolean
-#       
-      # Arguments:
-#       
-      # int quoteId - Shopping Cart Id (Quote Id)
-      # array of CartProductEntity - an array with list of CartProductEntity
-      # mixed (int | string) storeView - Store view Id or code (optional)
-      # CartProductEntity example
-#         
-        # array(
-        # array ('product_id' => 1, 'qty' => 2),
-        # array( "sku" => "testSKU", "quantity" => 4),
-        # array ('product_id' => 1, 'qty' => 2,
-           # 'options' => array("2" => 'A000000')
-          # ),
-        # )
-#         
-        # note options is an array in the form of
-#         
-        # option_id => content
-#         
-        # at moment there is no way to obtain option_id from Webservice Api
-      def add(*args)
-        commit('add', *args)
-      end
-      
-      # cart_product.update
-      # Update product or several products into shopping cart
-#       
-      # Return: boolean
-#       
-      # Arguments:
-#       
-      # int quoteId - Shopping Cart Id (Quote Id)
-      # array of CartProductEntity - an array with list of CartProductEntity
-      # mixed (int | string) storeView - Store view Id or code (optional)
-      def update(*args)
-        commit("update", *args)
-      end
-      
-      # cart_product.remove
-      # Remove product or several products from shopping cart
-#       
-      # Return: boolean
-#       
-      # Arguments:
-#       
-      # int quoteId - Shopping Cart Id (Quote Id)
-      # array of CartProductEntity - an array with list of CartProductEntity
-      # mixed (int | string) storeView - Store view Id or code (optional)
-      def remove(*args)
-        commit("remove", *args)
-      end
+    # cart_product.add
+    # Add product or several products into shopping cart
+    #
+    # Return: boolean
+    #
+    # Arguments:
+    #
+    # int quoteId - Shopping Cart Id (Quote Id)
+    # array of CartProductEntity - an array with list of CartProductEntity
+    # mixed (int | string) storeView - Store view Id or code (optional)
+    # CartProductEntity example
+    #
+    # array(
+    # array ('product_id' => 1, 'qty' => 2),
+    # array( "sku" => "testSKU", "quantity" => 4),
+    # array ('product_id' => 1, 'qty' => 2,
+    # 'options' => array("2" => 'A000000')
+    # ),
+    # )
+    #
+    # note options is an array in the form of
+    #
+    # option_id => content
+    #
+    # at moment there is no way to obtain option_id from Webservice Api
+    def add(*args)
+      commit('add', *args)
+    end
 
-      # Get list of products in shopping cart
-#       
-      # Return: array of catalogProductEntity - an array contained list of products
-#       
-      # Arguments:
-#       
-      # int quoteId - Shopping Cart Id (Quote Id)
-      # mixed (int | string) storeView - Store view Id or code (optional)
-      def list(*args)
-        results = commit("list", *args)
-        Array(results).map do |result|
-         Product.new(result)
-        end
+    # cart_product.update
+    # Update product or several products into shopping cart
+    #
+    # Return: boolean
+    #
+    # Arguments:
+    #
+    # int quoteId - Shopping Cart Id (Quote Id)
+    # array of CartProductEntity - an array with list of CartProductEntity
+    # mixed (int | string) storeView - Store view Id or code (optional)
+    def update(*args)
+      commit("update", *args)
+    end
+
+    # cart_product.remove
+    # Remove product or several products from shopping cart
+    #
+    # Return: boolean
+    #
+    # Arguments:
+    #
+    # int quoteId - Shopping Cart Id (Quote Id)
+    # array of CartProductEntity - an array with list of CartProductEntity
+    # mixed (int | string) storeView - Store view Id or code (optional)
+    def remove(*args)
+      commit("remove", *args)
+    end
+
+    # Get list of products in shopping cart
+    #
+    # Return: array of catalogProductEntity - an array contained list of products
+    #
+    # Arguments:
+    #
+    # int quoteId - Shopping Cart Id (Quote Id)
+    # mixed (int | string) storeView - Store view Id or code (optional)
+    def list(*args)
+      results = commit("list", *args)
+      Array(results).map do |result|
+        Product.new(result)
       end
-      
-      # cart_product.moveToCustomerQuote
-      # Move product(s) from Quote To Customer Shopping cart
-#       
-      # Return: boolean
-#       
-      # Arguments:
-#       
-      # int quoteId - Shopping Cart Id (Quote Id)
-      # array of CartProductEntity - an array with list of CartProductEntity
-      # mixed (int | string) storeView - Store view Id or code (optional)
-      def move_to_customer_quote(*args)
-        commit("moveToCustomerQuote", *args)
-      end
+    end
+
+    # cart_product.moveToCustomerQuote
+    # Move product(s) from Quote To Customer Shopping cart
+    #
+    # Return: boolean
+    #
+    # Arguments:
+    #
+    # int quoteId - Shopping Cart Id (Quote Id)
+    # array of CartProductEntity - an array with list of CartProductEntity
+    # mixed (int | string) storeView - Store view Id or code (optional)
+    def move_to_customer_quote(*args)
+      commit("moveToCustomerQuote", *args)
     end
   end
 end
