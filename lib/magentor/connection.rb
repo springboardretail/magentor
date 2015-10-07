@@ -9,12 +9,9 @@ module Magento
     end
 
     def client
-      host, protocol = normalize_host config[:host]
-      use_ssl = protocol == 'https'
-
       @client ||= XMLRPC::Client.new_from_hash \
-        host: host,
-        use_ssl: use_ssl,
+        host: config[:host],
+        use_ssl: config[:use_ssl],
         path: config[:path],
         port: config[:port]
     end
@@ -28,10 +25,6 @@ module Magento
     end
 
     private
-
-    def normalize_host(host)
-      String(host).gsub(/\/$/, '').split('://').reverse
-    end
 
     def connect!
       logger.debug "call: login"
