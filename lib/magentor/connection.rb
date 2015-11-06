@@ -27,7 +27,7 @@ module Magento
     private
 
     def connect!
-      logger.debug "call: login"
+      logger.debug "call: login on #{config[:host]}"
       retry_on_connection_error do
         @session = client.call("login", config[:username], config[:api_key])
       end
@@ -38,18 +38,18 @@ module Magento
     end
 
     def call_without_caching(method = nil, *args)
-      logger.debug "call: #{method}, #{args.inspect}"
+      logger.debug "call: #{method}, #{args.inspect} on #{config[:host]}"
       connect
       retry_on_connection_error do
         client.call_async("call", session, method, args)
       end
     rescue XMLRPC::FaultException => e
-      logger.debug "exception: #{e.faultCode} -> #{e.faultString}"
+      logger.debug "exception: #{e.faultCode} -> #{e.faultString} on #{config[:host]}"
       if e.faultCode == 5 # Session timeout
         connect!
         retry
       end
-      raise Magento::ApiError, "#{e.faultCode} -> #{e.faultString}"
+      raise Magento::ApiError, "#{e.faultCode} -> #{e.faultString} on #{config[:host]}"
     end
 
     def call_with_caching(method = nil, *args)
