@@ -23,7 +23,7 @@ module Magento
       connection.call(method, *args)
     end
 
-    def multi_commit(method, *args)
+    def multi_commit(method, args)
       method = "#{api_path}.#{method}"
       calls = Array(args).map {|arg| [method, arg]}
       connection.multicall(calls)

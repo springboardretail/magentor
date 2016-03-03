@@ -24,8 +24,8 @@ module Magento
       commit("update", *args)
     end
 
-    def multi_update(*args)
-      multi_commit("update", *args)
+    def update_many(args)
+      multi_commit("update", args)
     end
   end
 end

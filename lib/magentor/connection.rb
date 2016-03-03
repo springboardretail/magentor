@@ -48,7 +48,7 @@ module Magento
         client.call_async("call", session, method, args)
       end
     rescue XMLRPC::FaultException => e
-      log_fault_exception(e)
+      log_fault_exception(e.faultCode, e.faultString)
       if e.faultCode == 5 # Session timeout
         connect!
         retry
@@ -56,16 +56,20 @@ module Magento
       raise Magento::ApiError, "#{e.faultCode} -> #{e.faultString} on #{config[:host]}"
     end
 
-    def multicall_without_caching(*calls)
-      logger.debug "call: #{method}, #{args.inspect} on #{config[:host]}"
+    def multicall_without_caching(calls)
+      logger.debug "call: #{calls.inspect} on #{config[:host]}"
       connect
       retry_on_connection_error do
-        ret = client.call_async("multiCall", session, [*calls])
-        ret.each { |e| log_fault_exception(e) if e.is_a? Hash && e["isFault"] }
+        ret = client.call_async("multiCall", session, calls)
+        ret.each do |e|
+          if e.is_a?(Hash) && e["isFault"]
+            log_fault_exception(e['faultCode'], e['faultMessage'])
+          end
+        end
         return ret
       end
     rescue XMLRPC::FaultException => e
-      log_fault_exception(e)
+      log_fault_exception(e['faultCode'], e['faultMessage'])
       if e.faultCode == 5 # Session timeout
         connect!
         retry
@@ -73,8 +77,8 @@ module Magento
       raise Magento::ApiError, "#{e.faultCode} -> #{e.faultString} on #{config[:host]}"
     end
 
-    def log_fault_exception(e)
-      logger.debug "exception: #{e["faultCode"]} -> #{e["faultMessage"]}"
+    def log_fault_exception(code, message)
+      logger.debug "Exception: #{code} -> #{message}"
     end
 
     def call_with_caching(method = nil, *args)
