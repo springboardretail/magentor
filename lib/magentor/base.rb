@@ -23,6 +23,12 @@ module Magento
       connection.call(method, *args)
     end
 
+    def multi_commit(method, *args)
+      method = "#{api_path}.#{method}"
+      calls = Array(args).map {|arg| [method, arg]}
+      connection.multicall(calls)
+    end
+
     def api_path
       self.class.to_s.split('::').last.underscore.downcase
     end

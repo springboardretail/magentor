@@ -24,6 +24,10 @@ module Magento
       cache? ? call_with_caching(method, *args) : call_without_caching(method, *args)
     end
 
+     def multicall(*calls)
+       multicall_without_caching(*calls)
+     end
+
     private
 
     def connect!
@@ -44,12 +48,33 @@ module Magento
         client.call_async("call", session, method, args)
       end
     rescue XMLRPC::FaultException => e
-      logger.debug "exception: #{e.faultCode} -> #{e.faultString} on #{config[:host]}"
+      log_fault_exception(e)
       if e.faultCode == 5 # Session timeout
         connect!
         retry
       end
       raise Magento::ApiError, "#{e.faultCode} -> #{e.faultString} on #{config[:host]}"
+    end
+
+    def multicall_without_caching(*calls)
+      logger.debug "call: #{method}, #{args.inspect} on #{config[:host]}"
+      connect
+      retry_on_connection_error do
+        ret = client.call_async("multiCall", session, [*calls])
+        ret.each { |e| log_fault_exception(e) if e.is_a? Hash && e["isFault"] }
+        return ret
+      end
+    rescue XMLRPC::FaultException => e
+      log_fault_exception(e)
+      if e.faultCode == 5 # Session timeout
+        connect!
+        retry
+      end
+      raise Magento::ApiError, "#{e.faultCode} -> #{e.faultString} on #{config[:host]}"
+    end
+
+    def log_fault_exception(e)
+      logger.debug "exception: #{e["faultCode"]} -> #{e["faultMessage"]}"
     end
 
     def call_with_caching(method = nil, *args)
