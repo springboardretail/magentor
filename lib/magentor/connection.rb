@@ -13,7 +13,8 @@ module Magento
         host: config[:host],
         use_ssl: config[:use_ssl],
         path: config[:path],
-        port: config[:port]
+        port: config[:port],
+        timeout: config[:timeout]
     end
 
     def connect
